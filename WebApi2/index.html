@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+Test
+<input type="text" id="searchID"/>
+<button onclick="searchContact()">search</button>
+<button onclick="addContact()">add</button>
+<button onclick="putContact()">put</button>
+    <button onclick="deleteContact()">del</button>
+    
+    
+    
+<script type="text/javascript">
+    $(document)
+        .ready(function() {
+            $.getJSON("api/contactsEF",
+                function(result) {
+                    console.log(result);
+                });
+        });
+
+    function searchContact() {
+        $.ajax({
+            type: "Get",
+            dataType: "json",
+            url: "api/contact/" + $("#searchID").val(),
+            success: function(result) {
+                console.log(result);
+            }
+        });
+    }
+
+    function putContact() {
+        var changedContact = {
+            "FirstName": "Tech",
+            "LastName": "Lead"
+        }
+
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            url: "api/contact/0",
+            data: changedContact,
+            success: function (result) {
+                console.log(result);
+            }
+        });
+    }
+
+    function deleteContact() {
+        $.ajax({
+            type: "DELETE",
+            dataType: "json",
+            url: "api/contact/0",
+            success: function (result) {
+                console.log(result);
+            }
+        });
+    }
+
+    function addContact() {
+        var newContact = {
+            "Id":0,
+            "FirstName":"Tony",
+            "LastName":"Stark"
+        }
+
+        $.ajax({
+            type: "Post",
+            dataType: "json",
+            url: "api/contactsEF/",
+            data: newContact,
+            success: function (result) {
+                console.log(result);
+            }
+        });
+    }
+</script>
+</body>
+</html>
